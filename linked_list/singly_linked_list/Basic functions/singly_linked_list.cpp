@@ -33,20 +33,21 @@ void print(node *head)
 }
 int main()
 {
-    // statically
+    // statically creating nodes
     node n1(1);
-    node *head = &n1;
+    node *head = &n1; // starting  point is head
     node n2(2);
     n1.next = &n2;
     node n3(3);
     n2.next = &n3;
+    // list = 1->2->3
     print(head);
     // print list
     // cout<<n1.data<<" "<<n2.data<<endl;
     // // print using head
     // cout<<head->data<<" "<<<<endl;
 
-    // dynamically
+    // dynamically creating node using new keyword
     cout << endl;
     node *m3 = new node(3);
     node *m4 = new node(4);
@@ -54,7 +55,7 @@ int main()
     node *head1 = m3;
     m3->next = m4;
     m4->next = m5;
-
+   // list= 3->4->5
     print(head1); 
     // call by value change in head's value will not reflect in main head value will remain same
 

@@ -14,7 +14,7 @@ public:
         next = NULL;
     }
 };
-static int count=0;
+ int count=0;
 node *input()
 {
     int data;
