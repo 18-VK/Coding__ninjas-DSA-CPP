@@ -50,7 +50,7 @@ public:
 node *input()
 {
     int data;
-    cout << "Enter the first element of list,and to end the list enter -1" << endl;
+    cout << "Enter the element of list,and to end the list enter -1" << endl;
     cin >> data;
     node *head = NULL;
     //create a tail that will store address of end of list
@@ -75,6 +75,10 @@ node *input()
 }
 void print(node *head)
 {
+    if(head==NULL)
+    {
+        return ;
+    }
     node *temp = head;
     while (temp != NULL)
     {

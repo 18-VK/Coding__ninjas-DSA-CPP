@@ -35,8 +35,8 @@ int main()
     int data;
     cout<<"Enter the data of node you want to add"<<endl;
     cin>>data;
-   // head= insert_begin(head,data);
-   // print(head);
+   head= insert_begin(head,data);
+   print(head);
    head=insert_end(head,data);
    print(head);
    return 0;
