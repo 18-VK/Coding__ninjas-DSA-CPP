@@ -30,7 +30,5 @@ int main()
     cout<<"After reverse "<<endl;
     head=reverse(head);
     print(head);
-    head=reverse(head);
-    print(head);
     return 0;
 }
