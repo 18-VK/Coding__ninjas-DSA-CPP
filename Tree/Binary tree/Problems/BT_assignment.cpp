@@ -81,7 +81,7 @@ int main()
 {
     BinaryTreeNode *root = take_input();
    // print_levelwise(root);
-    cout << "Count node : " << count_node(root) << endl;
+    //cout << "Count node : " << count_node(root) << endl;
     // int x;
     // cout<<"enter element "<<endl;
     // cin>>x;
@@ -90,10 +90,10 @@ int main()
     //     cout<<"true"<<endl;
     // }
     // else{cout<<"false"<<endl;}
-   // cout<<"Height: "<<height_(root)<<endl;
-     print_identical(root);
-     mirror_tree(root);
-     cout<<"after mirror"<<endl;
-     print_identical(root);
+   cout<<"Height: "<<height_(root)<<endl;
+    //  print_identical(root);
+    //  mirror_tree(root);
+    //  cout<<"after mirror"<<endl;
+    //  print_identical(root);
     return 0;
 }

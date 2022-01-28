@@ -34,6 +34,6 @@ int main()
     print_identical(root);
     Pair p = max_and_min(root);
     
-    cout <<"minimum : "<< p.minimum << " " <<"maxiumum : "<< p.maximum << endl;
+    cout <<"minimum : "<< p.minimum << " , " <<"maxiumum : "<< p.maximum << endl;
     return 0;
 }
