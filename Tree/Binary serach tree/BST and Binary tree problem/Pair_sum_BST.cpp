@@ -11,6 +11,7 @@ Sample Output 1:
 #include <bits/stdc++.h>
 #include "Impl_binary_tree.h"
 using namespace std;
+//Method 1 -time O(N)  space O(N)
 // use inorder to get sorted array of elements
 void InOrder(BinaryTreeNode *root, vector<int> &output)
 {
