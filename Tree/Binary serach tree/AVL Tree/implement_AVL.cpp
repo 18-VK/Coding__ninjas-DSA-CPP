@@ -84,9 +84,11 @@ Node *leftRotate(Node *x)
 
     // Update heights
     x->height = max(height(x->left),
-                    height(x->right)) + 1;
+                    height(x->right)) +
+                1;
     y->height = max(height(y->left),
-                    height(y->right)) + 1;
+                    height(y->right)) +
+                1;
 
     // Return new root
     return y;
@@ -151,117 +153,117 @@ Node *insert(Node *node, int key)
     /* return the (unchanged) node pointer */
     return node;
 }
-Node * minValueNode(Node* node)
+Node *minValueNode(Node *node)
 {
-	Node* current = node;
+    Node *current = node;
 
-	/* loop down to find the leftmost leaf */
-	while (current->left != NULL)
-		current = current->left;
+    /* loop down to find the leftmost leaf */
+    while (current->left != NULL)
+        current = current->left;
 
-	return current;
+    return current;
 }
 Node *Delete_helper(int element, Node *root)
+{
+    if (root == NULL)
     {
-        if (root == NULL)
+        return NULL;
+    }
+    if (root->key == element)
+    {
+        // condition 1
+        if (root->left == NULL && root->right == NULL)
         {
+            delete root;
             return NULL;
         }
-        if (root->key == element)
+        // condition 2
+        if (root->left != NULL && root->right == NULL)
         {
-            // condition 1
-            if (root->left == NULL && root->right == NULL)
-            {
-                delete root;
-                return NULL;
-            }
-            //condition 2
-            if (root->left != NULL && root->right == NULL)
-            {
-                Node *temp = root->left;
-                root->left = NULL; // breaking connection
-                delete root;
-                return temp; // updated root
-            }
-            // condition 3
-            if (root->left == NULL && root->right != NULL)
-            {
+            Node *temp = root->left;
+            root->left = NULL; // breaking connection
+            delete root;
+            return temp; // updated root
+        }
+        // condition 3
+        if (root->left == NULL && root->right != NULL)
+        {
             Node *temp = root->right;
-                root->right = NULL; // breaking connection
-                delete root;
-                return temp; // updated root
-            }
-            // condition 4 - if both are not NULL
-            // find perfect replacement for root- it can be max element of left subtree or min element of right subtree
-            // so that after replacement Tree should match BST  properties
-            else
+            root->right = NULL; // breaking connection
+            delete root;
+            return temp; // updated root
+        }
+        // condition 4 - if both are not NULL
+        // find perfect replacement for root- it can be max element of left subtree or min element of right subtree
+        // so that after replacement Tree should match BST  properties
+        else
+        {
+            Node *R_min = root->right;  // root of right subtree
+            while (R_min->left != NULL) // we will get minimum element in left side of right subtree
             {
-                Node*R_min = root->right; // root of right subtree
-                while (R_min->left != NULL)          // we will get minimum element in left side of right subtree
-                {
-                    R_min = R_min->left;
-                }
-                root->key = R_min->key;
-                // delete R_min from right subtree
-                root->right = Delete_helper(R_min->key, root->right);
-                return root;
+                R_min = R_min->left;
             }
+            root->key = R_min->key;
+            // delete R_min from right subtree
+            root->right = Delete_helper(R_min->key, root->right);
+            return root;
         }
-        // calling subtree
-        if (element > root->key)
-        {
-            root->right = Delete_helper(element, root->right);
-        }
-        else if (element < root->key)
-        {
-            root->left = Delete_helper(element, root->left);
-        }
-        return root;
     }
-Node* deleteNode(Node* root, int key)
+    // calling subtree
+    if (element > root->key)
+    {
+        root->right = Delete_helper(element, root->right);
+    }
+    else if (element < root->key)
+    {
+        root->left = Delete_helper(element, root->left);
+    }
+    return root;
+}
+Node *deleteNode(Node *root, int key)
 {
-	
-	// STEP 1: PERFORM STANDARD BST DELETE
-     root=Delete_helper(key,root);
-	// STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
-	root->height = 1 + max(height(root->left),
-						height(root->right));
 
-	// STEP 3: GET THE BALANCE FACTOR OF
-	// THIS NODE (to check whether this
-	// node became unbalanced)
-	int balance = getBalance(root);
+    // STEP 1: PERFORM STANDARD BST DELETE
+    root = Delete_helper(key, root);
+    // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
+    root->height = 1 + max(height(root->left),
+                           height(root->right));
 
-	// If this node becomes unbalanced,
-	// then there are 4 cases
+    // STEP 3: GET THE BALANCE FACTOR OF
+    // THIS NODE (to check whether this
+    // node became unbalanced)
+    int balance = getBalance(root);
 
-	// Left Left Case
-	if (balance > 1 &&
-		getBalance(root->left) >= 0)
-		return rightRotate(root);
+    // If this node becomes unbalanced,
+    // then there are 4 cases
 
-	// Left Right Case
-	if (balance > 1 &&
-		getBalance(root->left) < 0)
-	{
-		root->left = leftRotate(root->left);
-		return rightRotate(root);
-	}
+    // Left Left Case
+    if (balance > 1 &&
+        getBalance(root->left) >= 0)
+        return rightRotate(root);
 
-	// Right Right Case
-	if (balance < -1 &&
-		getBalance(root->right) <= 0)
-		return leftRotate(root);
+    // Left Right Case
+    if (balance > 1 &&
+        getBalance(root->left) < 0)
+    {
+        root->left = leftRotate(root->left);
+        return rightRotate(root);
+    }
 
-	// Right Left Case
-	if (balance < -1 &&
-		getBalance(root->right) > 0)
-	{
-		root->right = rightRotate(root->right);
-		return leftRotate(root);
-	}
+    // Right Right Case
+    if (balance < -1 &&
+        getBalance(root->right) <= 0)
+        return leftRotate(root);
 
-	return root;
+    // Right Left Case
+    if (balance < -1 &&
+        getBalance(root->right) > 0)
+    {
+        root->right = rightRotate(root->right);
+        return leftRotate(root);
+    }
+
+    return root;
 }
 void preOrder(Node *root)
 {
@@ -275,48 +277,48 @@ void preOrder(Node *root)
 int main()
 {
     Node *root = NULL;
-    
-	/* Constructing tree given in
-	the above figure */
-	root = insert(root, 9);
-	root = insert(root, 5);
-	root = insert(root, 10);
-	root = insert(root, 0);
-	root = insert(root, 6);
-	root = insert(root, 11);
-	root = insert(root, -1);
-	root = insert(root, 1);
-	root = insert(root, 2);
 
-	/* The constructed AVL Tree would be
-			9
-		/ \
-		1 10
-		/ \ \
-	0 5 11
-	/ / \
-	-1 2 6
-	*/
+    /* Constructing tree given in
+    the above figure */
+    root = insert(root, 9);
+    root = insert(root, 5);
+    root = insert(root, 10);
+    root = insert(root, 0);
+    root = insert(root, 6);
+    root = insert(root, 11);
+    root = insert(root, -1);
+    root = insert(root, 1);
+    root = insert(root, 2);
 
-	cout << "Preorder traversal of the "
-			"constructed AVL tree is \n";
-	preOrder(root);
+    /* The constructed AVL Tree would be
+            9
+        / \
+        1 10
+        / \ \
+    0 5 11
+    / / \
+    -1 2 6
+    */
 
-	root = deleteNode(root, 10);
+    cout << "Preorder traversal of the "
+            "constructed AVL tree is \n";
+    preOrder(root);
 
-	/* The AVL Tree after deletion of 10
-			1
-		/ \
-		0 9
-		/ / \
-	-1 5	 11
-		/ \
-		2 6
-	*/
+    root = deleteNode(root, 10);
 
-	cout << "\nPreorder traversal after"
-		<< " deletion of 10 \n";
-	preOrder(root);
+    /* The AVL Tree after deletion of 10
+            1
+        / \
+        0 9
+        / / \
+    -1 5	 11
+        / \
+        2 6
+    */
+
+    cout << "\nPreorder traversal after"
+         << " deletion of 10 \n";
+    preOrder(root);
 
     return 0;
 }
