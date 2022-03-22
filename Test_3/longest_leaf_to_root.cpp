@@ -2,6 +2,10 @@
 #include "Impl_binary_tree.h"
 #include <vector>
 using namespace std;
+/*
+Given a binary tree, return the longest path from leaf to root.
+ Longest means, a path which contain maximum number of nodes from leaf to root.
+ */
 vector<int> longest_L2R(BinaryTreeNode *root)
 {
     vector<int> ans;
